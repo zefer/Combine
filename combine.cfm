@@ -9,8 +9,8 @@
 	@enableETags:				should we return etags in the headers? Etags allow the browser to do conditional requests, i.e. only give me the file if the etag is different.
 	@enableJSMin:				compress Javascript using JSMin?
 	@enableYuiCSS:				compress CSS using YUI CSS compressor
-	@skipMissingFiles:		true: ignore file-not-found errors, false: throw errors when a requested file cannot be found
-	@getFileModifiedMethod:	'java' or 'com'. Which method to use to obtain the last modified dates of local files. Java is the recommended and default option
+	@skipMissingFiles:			true: ignore file-not-found errors, false: throw errors when a requested file cannot be found
+	@getFileModifiedMethod:		'java' or 'com'. Which method to use to obtain the last modified dates of local files. Java is the recommended and default option
 */
 variables.sKey = 'combine_#hash(getCurrentTemplatePath())#';
 if((not structKeyExists(application, variables.sKey)) or structKeyExists(url, 'reinit'))
