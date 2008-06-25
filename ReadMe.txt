@@ -1,26 +1,28 @@
 Combine.CFC
 -----------
 
-Combine multiple javascript or CSS files into a single, compressed, HTTP request from the browser
+Combine multiple javascript or CSS files into a single, compressed, HTTP request.
 
 Allows you to change this:
 
-	<script src="file1.js" type="text/javascript"></script>
-	<script src="file2.js" type="text/javascript"></script>
-	<script src="file3.js" type="text/javascript"></script>
+	<script src='file1.js' type='text/javascript'></script>
+	<script src='file2.js' type='text/javascript'></script>
+	<script src='file3.js' type='text/javascript'></script>
 	
 To this:
 
-	<script src="combine/index.cfm?files=file1.js,file2.js,file3.js" type="text/javascript"></script>
+	<script src='combine.cfm?files=file1.js,file2.js,file3.js' type='text/javascript'></script>
+
+...combining and compressing multiple javascript or css files into one http request.
 
 
 How do I use it?
 ----------------
-- Place index.cfm and Combine.cfc somewhere under your webserver
-- Modify the index.cfm with your preferred combine options, and error handling if required.
+- Place combine.cfm and Combine.cfc somewhere under your webserver
+- Modify the combine.cfm with your preferred combine options, and error handling if required.
 - Update your <script> and <link> urls for JS and CSS respectively, e.g:
-  - <script src="combine/index.cfm?type=js&files=monkey.js,jungle.js" type="text/javascript"></script>
-  - <link href="combine/index.cfm?type=css&files=monkey.css,jungle.css" type="text/css" rel="stylesheet" media="screen" />
+  - <script src="combine.cfm?type=js&files=monkey.js,jungle.js" type="text/javascript"></script>
+  - <link href="combine.cfm?type=css&files=monkey.css,jungle.css" type="text/css" rel="stylesheet" media="screen" />
 - [optional] add the java class files to your class path - required if you want to use the CSS or Javascript compression
 
 
@@ -33,8 +35,8 @@ Why?
 
 How does it work?
 -----------------
-- [optional] Uses the dependable JSMin method to reduce redundancy from the JavaScript, without obfuscation. In my experience, it's dependable.
-- [optional] Uses the YUI CSS compressor to reduce redundancy from the CSS, not just white0space removal, see http://developer.yahoo.com/yui/compressor/
+- [optional] Uses the dependable JSMin method to reduce redundancy from the JavaScript, without obfuscation. In my experience, it's very dependable.
+- [optional] Uses the YUI CSS compressor to reduce redundancy from the CSS, not just white-space removal, see http://developer.yahoo.com/yui/compressor/
 - [optional] Caches merged files to local machine to avoid having to rebuild on each request
 - [optional] Uses Etags (file hash/fingerprints) to allow browsers to make conditional requests. E.g. browser says to server, only give me the javascript to download if your etag is different to mine (i.e. only if it has changed since my last visit). Otherwise, browser uses it's locally cached version.
 
@@ -52,7 +54,7 @@ Credits
 All I have done here is pulled together some other peoples clever work, into a workable solution for Coldfusion apps. So loads of credit to the following (and not very much to me!):
 
 - Combine.php
-  - I pretty much copied this idea, my code is very similar! Ed Eliot (www.ejeliot.com), Thanks!
+  - A lot of ideas came from this project. Ed Eliot (www.ejeliot.com), Thanks!
 - JSMin:
   - Originally written by Douglas Crockford www.crockford.com
   - Ported to Java by John Reilly http://www.inconspicuous.org/projects/jsmin/JSMin.java
