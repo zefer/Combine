@@ -43,7 +43,7 @@ How does it work?
 
 More
 ----
-- You may also see benefits from enabling gzip compression on your webserver. You may find with gzip enabled, the compression of CSS and JS files via combine.cfc is of no additional benefit (have you ever tried zipping a jpeg?). Experimentation should help you make this call.
+- You may also see benefits from enabling gzip compression on your webserver. You may find with gzip enabled, the compression of CSS and JS files via combine.cfc is of limited additional benefit (have you ever tried zipping a jpeg?). Experimentation should help you make this call.
 - YSlow is a great Firefox extension which can help you determine what optimisations you can make to imporve your site's performance (requires Firebug)
 - Firebug - It's pains me to think of the days I spent as a web developer without this Firefox extension!
 
@@ -51,7 +51,7 @@ More
 Credits
 -------
 
-All I have done here is pulled together some other peoples clever work, into a workable solution for Coldfusion apps. So loads of credit to the following (and not very much to me!):
+All I have done here is pulled together some other peoples clever work, into a workable solution for Coldfusion apps. So loads of credit to the following:
 
 - Combine.php
   - A lot of ideas came from this project. Ed Eliot (www.ejeliot.com), Thanks!
