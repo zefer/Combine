@@ -51,7 +51,7 @@ More
 Credits
 -------
 
-All I have done here is pulled together some other peoples clever work, into a workable solution for Coldfusion apps. So loads of credit to the following:
+All I have done here is pulled together some other peoples' clever work, into a workable solution for Coldfusion apps. So loads of credit to the following:
 
 - Combine.php
   - A lot of ideas came from this project. Ed Eliot (www.ejeliot.com), Thanks!
