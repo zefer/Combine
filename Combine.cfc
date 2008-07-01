@@ -32,9 +32,15 @@
 		// -----------------------------------------------------------------------
 		variables.jOutputStream = createObject("java","java.io.ByteArrayOutputStream");
 		variables.jStringReader = createObject("java","java.io.StringReader");
-		variables.jJSMin = createObject("java","com.magnoliabox.jsmin.JSMin");
-		variables.jStringWriter = createObject("java","java.io.StringWriter");
-		variables.jYuiCssCompressor = createObject("java","com.yahoo.platform.yui.compressor.CssCompressor");
+		if(variables.bJsMin)
+		{
+			variables.jJSMin = createObject("java","com.magnoliabox.jsmin.JSMin");
+		}
+		if(variables.bYuiCss)
+		{
+			variables.jStringWriter = createObject("java","java.io.StringWriter");
+			variables.jYuiCssCompressor = createObject("java","com.yahoo.platform.yui.compressor.CssCompressor");
+		}
 		
 		// determine which method to use for getting the file last modified dates
 		if(arguments.getFileModifiedMethod eq 'com')
