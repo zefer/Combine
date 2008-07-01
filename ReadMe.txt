@@ -23,7 +23,7 @@ How do I use it?
 - Update your <script> and <link> urls for JS and CSS respectively, e.g:
   - <script src="combine.cfm?type=js&files=monkey.js,jungle.js" type="text/javascript"></script>
   - <link href="combine.cfm?type=css&files=monkey.css,jungle.css" type="text/css" rel="stylesheet" media="screen" />
-- [optional] add the java class files to your class path - required if you want to use the CSS or Javascript compression
+- [optional] copy the 'com' directory and contents to your class path (directory structure must not change) - required if you want to use the CSS or Javascript compression.
 
 
 Why?
@@ -46,7 +46,7 @@ More
 - You may also see benefits from enabling gzip compression on your webserver. You may find with gzip enabled, the compression of CSS and JS files via combine.cfc is of limited additional benefit (have you ever tried zipping a jpeg?). Experimentation should help you make this call.
 - YSlow is a great Firefox extension which can help you determine what optimisations you can make to imporve your site's performance (requires Firebug)
 - Firebug - It's pains me to think of the days I spent as a web developer without this Firefox extension!
-
+- The following post contains useful information about the Java class path: http://weblogs.macromedia.com/cantrell/archives/2004/07/the_definitive.html
 
 Credits
 -------
