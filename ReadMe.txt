@@ -23,7 +23,16 @@ How do I use it?
 - Update your <script> and <link> urls for JS and CSS respectively, e.g:
   - <script src="combine.cfm?type=js&files=monkey.js,jungle.js" type="text/javascript"></script>
   - <link href="combine.cfm?type=css&files=monkey.css,jungle.css" type="text/css" rel="stylesheet" media="screen" />
-- [optional] copy the 'com' directory and contents to your class path (directory structure must not change) - required if you want to use the CSS or Javascript compression.
+- [optional] If you want to use the CSS or Javascript compression, you need to add the required Java to your classpath. See "How to add the Java to your classpath" below...
+
+
+How to add the Java to your classpath [required for css and js compression]
+---------------------------------------------------------------------------
+1. Determine where you will place your Java, it must go in a directory in your Coldfusion class path. This could either be cf_install_dir\lib, or a custom directory path which has been added to the Coldfusion class path (through Coldfusion's admin/config)
+2. Add the code to the class_path_dir as determined in step 1, using one of the following 2 methods:
+  a. copy combine.jar (archive) to your class_path_dir; or
+  b. copy the 'com' directory and contents to your class_path_dir (directory structure must not change).
+3. Restart Coldfusion
 
 
 Why?
@@ -47,6 +56,7 @@ More
 - YSlow is a great Firefox extension which can help you determine what optimisations you can make to imporve your site's performance (requires Firebug)
 - Firebug - It's pains me to think of the days I spent as a web developer without this Firefox extension!
 - The following post contains useful information about the Java class path: http://weblogs.macromedia.com/cantrell/archives/2004/07/the_definitive.html
+
 
 Credits
 -------
