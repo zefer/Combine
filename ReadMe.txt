@@ -52,8 +52,9 @@ How does it work?
 
 More
 ----
-- You may also see benefits from enabling gzip compression on your webserver. You may find with gzip enabled, the compression of CSS and JS files via combine.cfc is of limited additional benefit (have you ever tried zipping a jpeg?). Experimentation should help you make this call.
+- You are likely to also see benefits from enabling gzip compression on your webserver. Compressing something twice is generally pointless (ever tried zipping a JPEG?). However, combine.cfc strips out white space, comments, etc, Gzip is lossless; therefore the combination of the 2 can be quite effective.
 - YSlow is a great Firefox extension which can help you determine what optimisations you can make to imporve your site's performance (requires Firebug)
+- Yahoo's best practices document (linked to from YSlow) is worth a read if you are serious about optimisation: http://developer.yahoo.com/performance/rules.html
 - Firebug - It's pains me to think of the days I spent as a web developer without this Firefox extension!
 - The following post contains useful information about the Java class path: http://weblogs.macromedia.com/cantrell/archives/2004/07/the_definitive.html
 
