@@ -240,18 +240,19 @@
 	</cffunction>
 	
 	
-	<cffunction name="convertToAbsolutePaths" access="private" returnType="string" hint="takes a list of relative paths and makes them absolute, based on variables.sBaseFilePath">
-		<cfargument name="relativePaths" type="string" required="true" hint="commar delimited list of relative paths" />
+	<cffunction name="convertToAbsolutePaths" access="private" returnType="string"output="false" hint="takes a list of relative paths and makes them absolute, based on variables.sBaseFilePath">
+		<cfargument name="relativePaths" type="string" required="true" hint="delimited list of relative paths" />
 		<cfargument name="delimiter" type="string" required="false" default="," hint="the delimiter used in the provided paths string" />
-		<cfscript>
-		// convert the relative web paths into full file paths
-		var absReplace = '#arguments.delimiter##variables.sBaseFilePath#\';
-		var filePaths = reReplaceNoCase(arguments.relativePaths, '/', '\', 'all');
-		filePaths = reReplaceNoCase(filePaths, '#arguments.delimiter#\\|^\\', absReplace, 'all');
-		// remove url params e.g. scriptaculous.js?load=effects ==> scriptaculous.js
-		filePaths = reReplaceNoCase(filePaths, '[\?|\&][^\#arguments.delimiter#]*', '', 'all');
-		return filePaths;
-		</cfscript>
+		
+		<cfset var filePaths = '' />
+		<cfset var path = '' />
+		
+		<cfloop list="#arguments.relativePaths#" delimiters="#arguments.delimiter#" index="path">
+			<cfset filePaths = listAppend(filePaths, expandPath(path), arguments.delimiter) />
+		</cfloop>
+
+		<cfreturn filePaths />
+		
 	</cffunction>
 	
 </cfcomponent>

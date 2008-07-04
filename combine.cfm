@@ -1,4 +1,5 @@
 <cfsetting showdebugoutput="false" />
+<cfsetting enablecfoutputonly="true" />
 <cfscript>
 /*
 	Create the combine object, or use the cached version
@@ -13,23 +14,29 @@
 	@getFileModifiedMethod:		'java' or 'com'. Which method to use to obtain the last modified dates of local files. Java is the recommended and default option
 */
 variables.sKey = 'combine_#hash(getCurrentTemplatePath())#';
-if((not structKeyExists(application, variables.sKey)) or structKeyExists(url, 'reinit'))
+if((not isDefined('application')) or (not structKeyExists(application, variables.sKey)) or structKeyExists(url, 'reinit'))
 {
-	application[variables.sKey] = createObject("component", "combine").init(
-		basePath: 'C:\webroot\myapp\www',
+	variables.oCombine = createObject("component", "combine").init(
+		basePath: GetDirectoryFromPath(GetBaseTemplatePath()),
 		enableCache: true,
-		cachePath: 'c:\webroot\myapp\cache',
+		cachePath: expandPath('example\cache'),
 		enableETags: true,
 		enableJSMin: true,
 		enableYuiCSS: true,
 		skipMissingFiles: false
 	);
+	// cache the object in the application scope, if we have an application scope!
+	if(isDefined('application'))
+	{
+		application[variables.sKey] = variables.oCombine;
+	}
 }
-variables.oCombine = application[variables.sKey];
 
 /*	Make sure we have the required paths (files to combine) in the url */
 if(not structKeyExists(url, 'files'))
+{
 	return;
+}
 
 /*	Combine the files, and handle any errors in an appropriate way for the current app */
 try
