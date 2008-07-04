@@ -17,7 +17,6 @@ variables.sKey = 'combine_#hash(getCurrentTemplatePath())#';
 if((not isDefined('application')) or (not structKeyExists(application, variables.sKey)) or structKeyExists(url, 'reinit'))
 {
 	variables.oCombine = createObject("component", "combine").init(
-		basePath: GetDirectoryFromPath(GetBaseTemplatePath()),
 		enableCache: true,
 		cachePath: expandPath('example\cache'),
 		enableETags: true,

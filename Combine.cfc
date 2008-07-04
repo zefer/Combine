@@ -1,7 +1,6 @@
 <cfcomponent displayname="Combine" output="false" hint="provides javascript and css file merge and compress functionality, to reduce the overhead caused by file sizes & multiple requests">
 	
 	<cffunction name="init" access="public" returntype="Combine" output="false">
-		<cfargument name="basePath" type="string" required="true" hint="the path where the files' relative urls are based. allows us to convert relative urls to file paths" />
 		<cfargument name="enableCache" type="boolean" required="true" />
 		<cfargument name="cachePath" type="string" required="true" />
 		<cfargument name="enableETags" type="boolean" required="true" />
@@ -24,8 +23,6 @@
 		variables.bYuiCss = arguments.enableYuiCSS;
 		// text used to delimit the merged files in the final output
 		variables.sOutputDelimiter = arguments.outputSeperator;
-		// the path where the files' relative urls are based. allows us to convert relative urls to file paths
-		variables.sBaseFilePath = arguments.basePath;
 		// skip files that don't exists? If false, non-existent files will cause an error
 		variables.bSkipMissingFiles = arguments.skipMissingFiles;
 		
@@ -240,7 +237,7 @@
 	</cffunction>
 	
 	
-	<cffunction name="convertToAbsolutePaths" access="private" returnType="string"output="false" hint="takes a list of relative paths and makes them absolute, based on variables.sBaseFilePath">
+	<cffunction name="convertToAbsolutePaths" access="private" returnType="string"output="false" hint="takes a list of relative paths and makes them absolute, using expandPath">
 		<cfargument name="relativePaths" type="string" required="true" hint="delimited list of relative paths" />
 		<cfargument name="delimiter" type="string" required="false" default="," hint="the delimiter used in the provided paths string" />
 		
