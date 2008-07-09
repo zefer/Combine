@@ -59,6 +59,11 @@ More
 - The following post contains useful information about the Java class path: http://weblogs.macromedia.com/cantrell/archives/2004/07/the_definitive.html
 
 
+Contact
+-------
+Please feel free to contact me with any issues, ideas and experiences you have with Combine.cfc. jroberts1{at}gmail{dot}com
+
+
 Credits
 -------
 
