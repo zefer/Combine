@@ -50,6 +50,17 @@ How does it work?
 - [optional] Uses Etags (file hash/fingerprints) to allow browsers to make conditional requests. E.g. browser says to server, only give me the javascript to download if your etag is different to mine (i.e. only if it has changed since my last visit). Otherwise, browser uses it's locally cached version.
 
 
+Real Stats - an example of the benefits of ETags
+------------------------------------------------
+Real statistics from one of our sites (obtained via Fusion Reactor). Note how many 304 status codes are returned. These mean that the request instantly ends, and the browser uses its local version. This happens when the browser's version is the same as the server version, and results in less load on your server!
+
+200 OK: 10346 (normal response, resturns content)
+304 Not Modified: 3038 (server load reduced!)
+500 Internal Server Error: 11 (my bugs?!) 
+301 Moved Permanently: 187 
+302 Found: 48 
+404 Not Found: 58 
+
 More
 ----
 - You are likely to also see benefits from enabling gzip compression on your webserver. Compressing something twice is generally pointless (ever tried zipping a JPEG?). However, combine.cfc strips out white space, comments, etc, Gzip is lossless; therefore the combination of the 2 can be quite effective.
