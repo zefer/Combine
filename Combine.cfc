@@ -125,7 +125,7 @@
 		<cfif (structKeyExists(cgi, 'HTTP_IF_NONE_MATCH') and cgi.HTTP_IF_NONE_MATCH contains eTag) and variables.bEtags>
 			<!--- nothing has changed, return nothing --->
 			<cfheader statuscode="304" statustext="Not Modified">
-			<cfheader name="Content-Length" value="0">
+			<!--- <cfheader name="Content-Length" value="0"> --->
 			<cfreturn />
 		<cfelse>
 			<!--- first time visit, or files have changed --->
