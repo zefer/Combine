@@ -128,6 +128,7 @@
 		 --->
 		<cfif (structKeyExists(cgi, 'HTTP_IF_NONE_MATCH') and cgi.HTTP_IF_NONE_MATCH contains eTag) and variables.bEtags>
 			<!--- nothing has changed, return nothing --->
+			<cfcontent type="#variables.stContentTypes[sType]#">
 			<cfheader statuscode="304" statustext="Not Modified">
 			<!--- <cfheader name="Content-Length" value="0"> --->
 			<cfreturn />
