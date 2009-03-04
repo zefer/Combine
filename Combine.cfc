@@ -26,6 +26,10 @@
 		// skip files that don't exists? If false, non-existent files will cause an error
 		variables.bSkipMissingFiles = arguments.skipMissingFiles;
 		
+		variables.stContentTypes = structNew();
+		variables.stContentTypes.css = 'text/css';
+		variables.stContentTypes.js = 'application/javascript';
+		
 		// -----------------------------------------------------------------------
 		variables.jOutputStream = createObject("java","java.io.ByteArrayOutputStream");
 		variables.jStringReader = createObject("java","java.io.StringReader");
@@ -179,7 +183,7 @@
 		<cfargument name="sOut" type="string" required="true" />
 		<cfargument name="sType" type="string" required="true" />
 	
-		<cfcontent type="text/#arguments.sType#">
+		<cfcontent type="#variables.stContentTypes[arguments.sType]#">
 		<cfoutput>#arguments.sOut#</cfoutput>
 		
 	</cffunction>
