@@ -4,7 +4,6 @@
 /*
 	Create the combine object, or use the cached version
 
-	@basePath:					allows combine.cfc to convert the relative (remote) include paths into absolute (local) file paths
 	@enableCache:				true: cache combined/compressed files locally, false: re-combine on each request
 	@cachePath:					where should the cached combined files be stored?
 	@enableETags:				should we return etags in the headers? Etags allow the browser to do conditional requests, i.e. only give me the file if the etag is different.
@@ -14,8 +13,14 @@
 	@getFileModifiedMethod:		'java' or 'com'. Which method to use to obtain the last modified dates of local files. Java is the recommended and default option
 */
 variables.sKey = 'combine_#hash(getCurrentTemplatePath())#';
-if((not isDefined('application')) or (not structKeyExists(application, variables.sKey)) or structKeyExists(url, 'reinit'))
+if(isDefined('application') and structKeyExists(application, variables.sKey) and not structKeyExists(url, 'reinit'))
 {
+	// use a cached version of Combine if available (unless reinit is specified in the url)
+	variables.oCombine = application[variables.sKey];
+}
+else
+{
+	// no cached version, or a forced reinit. Create a new instance.
 	variables.oCombine = createObject("component", "combine").init(
 		enableCache: true,
 		cachePath: expandPath('example\cache'),
