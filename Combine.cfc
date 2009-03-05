@@ -95,11 +95,18 @@
 		{
 			sType = arguments.type;
 		}
-		if(not listFindNoCase('js,css', sType))
+		else
 		{
 			sType = listLast( listFirst(filePaths, sDelimiter) , '.');
 		}
 		</cfscript>
+		
+		<!--- security check --->
+		<cfif not listFindNoCase('js,css', sType)>
+			<!--- don't go any further, we only return the contents of JS or CSS files! --->
+			<cfheader statuscode="400" statustext="Bad Request">
+			<cfreturn />
+		</cfif>
 
 		<!--- get the latest last modified date --->
 		<cfset sCorrectedFilePaths = '' />
@@ -107,7 +114,8 @@
 			
 			<cfset sFilePath = listGetAt(filePaths, i, sDelimiter) />
 			
-			<cfif fileExists( sFilePath )>
+			<!--- check it is a valid JS or CSS file. Don't allow mixed content (all JS or all CSS only) --->
+			<cfif fileExists( sFilePath ) and listLast(sFilePath, '.') eq sType>
 			
 				<cfset lastModified = max(lastModified, getFileDateLastModified( sFilePath )) />
 				<cfset sCorrectedFilePaths = listAppend(sCorrectedFilePaths, sFilePath, sDelimiter) />
