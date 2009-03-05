@@ -1,15 +1,18 @@
 <cfcomponent displayname="Combine" output="false" hint="provides javascript and css file merge and compress functionality, to reduce the overhead caused by file sizes & multiple requests">
 	
 	<cffunction name="init" access="public" returntype="Combine" output="false">
-		<cfargument name="enableCache" type="boolean" required="true" />
-		<cfargument name="cachePath" type="string" required="true" />
-		<cfargument name="enableETags" type="boolean" required="true" />
+		<cfargument name="enableCache" type="boolean" required="true" hint="When enabled, the content we generate by combining multiple files is stored locally, so we don't have to regenerate on each request." />
+		<cfargument name="cachePath" type="string" required="true" hint="Where to store the local cache of combined files" />
+		<cfargument name="enableETags" type="boolean" required="true" hint="Etags are a 'hash' which represents what is in the response. These allow the browser to perform conditional requests, i.e. only give me the content if your Etag is different to my Etag." />
 		<cfargument name="enableJSMin" type="boolean" required="true" hint="compress JS using JSMin?" />
 		<cfargument name="enableYuiCSS" type="boolean" required="true" hint="compress CSS using the YUI css compressor?" />
 		<!--- optional args --->
 		<cfargument name="outputSeperator" type="string" required="false" default="#chr(13)#" hint="seperates the output of different file content" />
 		<cfargument name="skipMissingFiles" type="boolean" required="false" default="true" hint="skip files that don't exists? If false, non-existent files will cause an error" />
 		<cfargument name="getFileModifiedMethod" type="string" required="false" default="java" hint="java or com. Which technique to use to get the last modified times for files." />
+		<!--- experimental - use with care! You may want to tweak these values if your webserver has a caching layer that either causes problems, or adds potential performance gains. Disabling 304s will let the caching layer handle the caching according to its configuration. Setting cache-control to 'private' will bypass the caching layer and put the responsibility in the hands of Combine. --->
+		<cfargument name="enable304s" type="boolean" required="false" default="true" hint="304 (not-modified) is returned when the request's etag matches the current response, so we return a 304 instead of the content, instructing the browser to use it's cache. A valid reason for disabling this would be if you have an effective caching layer on your web server, which handles 304s more efficiently. However, unlike Combine the caching layer will not check the modified state of each individual css/js file. Note that to enable 304s, you must also enable eTags." />
+		<cfargument name="cacheControl" type="string" required="false" default="" hint="specify an optional cache-control header, which will be returned in each response. See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html. An example use is to specify 'private' which will disable proxy caching, only allowing browser caching." />
 		
 		<cfscript>
 		variables.sCachePath = arguments.cachePath;
@@ -26,9 +29,15 @@
 		// skip files that don't exists? If false, non-existent files will cause an error
 		variables.bSkipMissingFiles = arguments.skipMissingFiles;
 		
+		// configure the content-types that are returned
 		variables.stContentTypes = structNew();
 		variables.stContentTypes.css = 'text/css';
 		variables.stContentTypes.js = 'application/javascript';
+		
+		// cache-control header
+		variables.sCacheControl = arguments.cacheControl;
+		// return 304s when conditional requests are made with matching Etags?
+		variables.bEnable304s = arguments.enable304s;
 		
 		// -----------------------------------------------------------------------
 		variables.jOutputStream = createObject("java","java.io.ByteArrayOutputStream");
@@ -126,11 +135,16 @@
 			if the browser is doing a conditional request, then only send it the file if the browser's
 			etag doesn't match the server's etag (i.e. the browser's file is different to the server's)
 		 --->
-		<cfif (structKeyExists(cgi, 'HTTP_IF_NONE_MATCH') and cgi.HTTP_IF_NONE_MATCH contains eTag) and variables.bEtags>
+		<cfif (structKeyExists(cgi, 'HTTP_IF_NONE_MATCH') and cgi.HTTP_IF_NONE_MATCH contains eTag) and variables.bEtags and variables.bEnable304s>
 			<!--- nothing has changed, return nothing --->
 			<cfcontent type="#variables.stContentTypes[sType]#">
 			<cfheader statuscode="304" statustext="Not Modified">
-			<!--- <cfheader name="Content-Length" value="0"> --->
+			
+			<!--- specific Cache-Control header? --->
+			<cfif len(variables.sCacheControl)>
+				<cfheader name="Cache-Control" value="#variables.sCacheControl#">
+			</cfif>
+			
 			<cfreturn />
 		<cfelse>
 			<!--- first time visit, or files have changed --->
@@ -142,7 +156,7 @@
 				<cfif fileExists(sCacheFile)>
 					<cffile action="read" file="#sCacheFile#" variable="sOutput" />
 					<!--- output contents --->
-					<cfset outputContent(sOutput, sType) />
+					<cfset outputContent(sOutput, sType, variables.sCacheControl) />
 					<cfreturn />
 				</cfif>
 				
@@ -167,7 +181,7 @@
 			}
 			
 			//output contents
-			outputContent(sOutput, sType);
+			outputContent(sOutput, sType, variables.sCacheControl);
 			</cfscript>
 			
 			<!--- write the cache file --->
@@ -183,8 +197,16 @@
 	<cffunction name="outputContent" access="private" returnType="void" output="true">
 		<cfargument name="sOut" type="string" required="true" />
 		<cfargument name="sType" type="string" required="true" />
-	
+		<cfargument name="sCacheControl" type="string" required="false" default="" />
+		
+		<!--- content-type (e.g. text/css) --->
 		<cfcontent type="#variables.stContentTypes[arguments.sType]#">
+		
+		<!--- specific Cache-Control header? --->
+		<cfif len(arguments.sCacheControl)>
+			<cfheader name="Cache-Control" value="#arguments.sCacheControl#">
+		</cfif>
+		
 		<cfoutput>#arguments.sOut#</cfoutput>
 		
 	</cffunction>
