@@ -54,7 +54,7 @@ Real Stats - an example of the benefits of ETags
 ------------------------------------------------
 Real statistics from one of our sites (obtained via Fusion Reactor). Note how many 304 status codes are returned. These mean that the request instantly ends, and the browser uses its local version. This happens when the browser's version is the same as the server version, and results in less load on your server!
 
-200 OK: 10346 (normal response, resturns content)
+200 OK: 10346 (normal response, returns content)
 304 Not Modified: 3038 (server load reduced!)
 500 Internal Server Error: 11 (my bugs?!) 
 301 Moved Permanently: 187 
