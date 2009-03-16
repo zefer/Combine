@@ -86,3 +86,4 @@ All I have done here is pulled together some other peoples' clever work, into a 
   - Ported to Java by John Reilly http://www.inconspicuous.org/projects/jsmin/JSMin.java
 - YUI CSS Compressor:
   - Part of the impressive YUI Compressor library http://developer.yahoo.com/yui/compressor/
+  
