@@ -29,10 +29,8 @@ How do I use it?
 How to add the Java to your classpath [required for css and js compression]
 ---------------------------------------------------------------------------
 1. Determine where you will place your Java, it must go in a directory in your Coldfusion class path. This could either be cf_install_dir\lib, or a custom directory path which has been added to the Coldfusion class path (through Coldfusion's admin/config)
-2. Add the code to the class_path_dir as determined in step 1, using one of the following 2 methods:
-  a. copy combine.jar (archive) to your class_path_dir; or
-  b. copy the 'com' directory and contents to your class_path_dir (directory structure must not change).
-3. Restart Coldfusion
+2. Add the code to the class_path_dir as determined in step 1. Copy combine.jar and yuicompressor.x.x.x.jar to your class_path_dir.
+3. Restart your CFML server
 
 
 Why?
