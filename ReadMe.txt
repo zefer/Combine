@@ -26,8 +26,15 @@ How do I use it?
 - [optional] If you want to use the CSS or Javascript compression, you need to add the required Java to your classpath. See "How to add the Java to your classpath" below...
 
 
-How to add the Java to your classpath [required for css and js compression]
----------------------------------------------------------------------------
+Using JavaLoader to load the Java objects
+-----------------------------------------
+By using Mark Mandel's JavaLoader, you can avoid having to place the .jar files in the class path, which can be fiddly, or even restricted on some shared hosting platforms.
+1. Download JavaLoader http://javaloader.riaforge.org/
+2. Tweak combine.cfm to pass in an instance of JavaLoader.cfc, and the path to the directory where you have placed the .jar files included with Combine.
+
+
+How to add the Java to your classpath [required for css and js compression, unless you use JavaLoader]
+------------------------------------------------------------------------------------------------------
 1. Determine where you will place your Java, it must go in a directory in your Coldfusion class path. This could either be cf_install_dir\lib, or a custom directory path which has been added to the Coldfusion class path (through Coldfusion's admin/config)
 2. Add the code to the class_path_dir as determined in step 1. Copy combine.jar and yuicompressor.x.x.x.jar to your class_path_dir.
 3. Restart your CFML server

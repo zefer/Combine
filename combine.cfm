@@ -22,6 +22,8 @@ if(isDefined('application') and structKeyExists(application, variables.sKey) and
 else
 {
 	// no cached version, or a forced reinit. Create a new instance.
+	
+	// not using JavaLoader (the jar files must be in the classpath)
 	variables.oCombine = createObject("component", "combine").init(
 		enableCache: true,
 		cachePath: expandPath('example\cache'),
@@ -30,6 +32,19 @@ else
 		enableYuiCSS: true,
 		skipMissingFiles: false
 	);
+	
+	// using JavaLoader
+	/*variables.oCombine = createObject("component", "combine").init(
+		enableCache: true,
+		cachePath: expandPath('example\cache'),
+		enableETags: true,
+		enableJSMin: true,
+		enableYuiCSS: true,
+		skipMissingFiles: false,
+		javaLoader: createObject("component", "javaloader.JavaLoader"),
+		jarPath: 'C:\www\misc\zefer\projects\combine'
+	);*/
+	
 	// cache the object in the application scope, if we have an application scope!
 	if(isDefined('application'))
 	{
