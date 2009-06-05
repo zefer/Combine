@@ -47,7 +47,9 @@
 		variables.bUseJavaLoader = isObject(arguments.javaLoader) AND len(arguments.jarPath);
 		if(variables.bUseJavaLoader)
 		{
-			variables.jarFileArray = [arguments.jarPath & "\combine.jar",arguments.jarPath & "\yuicompressor-2.4.2.jar"];
+			variables.jarFileArray = arrayNew(1);
+			arrayAppend(variables.jarFileArray, arguments.jarPath & "\combine.jar");
+			arrayAppend(variables.jarFileArray, arguments.jarPath & "\yuicompressor-2.4.2.jar");
 			arguments.javaLoader.init(variables.jarFileArray);
 		}
 		
