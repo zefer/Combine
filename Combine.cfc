@@ -119,6 +119,8 @@
 		var sOutput = '';
 		var sFileContent = '';
 		
+		var sHttpNoneMatch = '';
+		
 		var filePaths = convertToAbsolutePaths(files, delimiter);
 		
 		// determine what file type we are dealing with
@@ -170,11 +172,17 @@
 			<cfheader name="ETag" value="""#etag#""">
 		</cfif>
 		
+		<!--- obtain the HTTP_IF_NONE_MATCH request header - strange behaviour using structKeyExists() on Railo 3.1 --->
+		<cftry>
+			<cfset sHttpNoneMatch = cgi.HTTP_IF_NONE_MATCH />
+			<cfcatch type="any"></cfcatch>
+		</cftry>
+		
 		<!--- 
 			if the browser is doing a conditional request, then only send it the file if the browser's
 			etag doesn't match the server's etag (i.e. the browser's file is different to the server's)
 		 --->
-		<cfif (structKeyExists(cgi, 'HTTP_IF_NONE_MATCH') and cgi.HTTP_IF_NONE_MATCH contains eTag) and variables.bEtags and variables.bEnable304s>
+		<cfif sHttpNoneMatch contains eTag and variables.bEtags and variables.bEnable304s>
 			<!--- nothing has changed, return nothing --->
 			<cfcontent type="#variables.stContentTypes[sType]#">
 			<cfheader statuscode="304" statustext="Not Modified">
