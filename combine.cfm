@@ -26,7 +26,7 @@ else
 	// not using JavaLoader (the jar files must be in the classpath)
 	variables.oCombine = createObject("component", "combine").init(
 		enableCache: true,
-		cachePath: expandPath('example\cache'),
+		cachePath: expandPath('example/cache'),
 		enableETags: true,
 		enableJSMin: true,
 		enableYuiCSS: true,
@@ -36,7 +36,7 @@ else
 	// using JavaLoader
 	/*variables.oCombine = createObject("component", "combine").init(
 		enableCache: true,
-		cachePath: expandPath('example\cache'),
+		cachePath: expandPath('example/cache'),
 		enableETags: true,
 		enableJSMin: true,
 		enableYuiCSS: true,
