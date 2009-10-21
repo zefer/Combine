@@ -98,6 +98,11 @@
 		}
 		</cfscript>
 		
+		<!--- ensure the cache directory exists --->
+		<cfif not directoryExists(variables.sCachePath)>
+			<cfdirectory action="create" directory="#variables.sCachePath#" />
+		</cfif>
+		
 		<cfreturn this />
 	</cffunction>
 	
