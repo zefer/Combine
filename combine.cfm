@@ -1,6 +1,7 @@
 <cfsetting showdebugoutput="false" />
 <cfapplication name="combine" />
 <cfsetting enablecfoutputonly="true" />
+<cfsetting requesttimeout="5" />
 <cfscript>
 /*
 	Create the combine object, or use the cached version
