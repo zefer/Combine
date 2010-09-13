@@ -16,11 +16,6 @@ License
    limitations under the License.
 
 
-How much?
----------
-Nowt! If you find this project worthy of a donation, please visit my Amazon wishlist http://www.amazon.co.uk/gp/registry/3JVC6BNDZP81B
-
-
 Combine.CFC
 -----------
 
@@ -46,7 +41,17 @@ How do I use it?
 - Update your <script> and <link> urls for JS and CSS respectively, e.g:
   - <script src="combine.cfm?type=js&files=monkey.js,jungle.js" type="text/javascript"></script>
   - <link href="combine.cfm?type=css&files=monkey.css,jungle.css" type="text/css" rel="stylesheet" media="screen" />
-- [optional] If you want to use the CSS or Javascript compression, you need to add the required Java to your classpath. See "How to add the Java to your classpath" below...
+- If you want to use the CSS or Javascript compression, you need to add the required Java to your classpath. See "How to add the Java to your classpath" below...
+
+
+Caching
+-------
+Combine caches the generated 
+
+
+How much?
+---------
+Nowt! If you find this project worthy of a donation, please visit my Amazon wishlist http://www.amazon.co.uk/gp/registry/3JVC6BNDZP81B
 
 
 Using JavaLoader to load the Java objects
@@ -67,15 +72,16 @@ Why?
 ----
 - Reduces the number of HTTP requests required to load your page. All your javascript files can be combined into a single <script> request in your html file.
 - Compressing the CSS/JS reduces the filesize, therefore reduces the bandwidth overhead
-- Keep seperate CSS and JS files for easier development
+- Keep separate CSS and JS files for easier development
 
 
 How does it work?
 -----------------
 - [optional] Uses the dependable JSMin method to reduce redundancy from the JavaScript, without obfuscation. In my experience, it's very dependable.
 - [optional] Uses the YUI CSS compressor to reduce redundancy from the CSS, not just white-space removal, see http://developer.yahoo.com/yui/compressor/
-- [optional] Caches merged files to local machine to avoid having to rebuild on each request
-- [optional] Uses Etags (file hash/fingerprints) to allow browsers to make conditional requests. E.g. browser says to server, only give me the javascript to download if your etag is different to mine (i.e. only if it has changed since my last visit). Otherwise, browser uses it's locally cached version.
+- [optional] Caches merged files to avoid having to rebuild on each request
+- [optional] Uses Etags (file hash/fingerprints) to allow browsers to make conditional requests. E.g. browser says to server, only give me the javascript to download if your etag is different to mine (i.e. only if it has changed since my last visit). Otherwise, browser uses it's locally cached version (304 NOT MODIFIED).
+- [optional] Specify HTTP caching headers (such as Cache-Control) to instruct browsers and proxies how they should (or maybe shouldn't!) cache the files. A couple of articles I highly recommend reading: http://symkat.com/45/understanding-http-caching/ & http://palisade.plynt.com/issues/2008Jul/cache-control-attributes/
 
 
 Real Stats - an example of the benefits of ETags
@@ -89,13 +95,15 @@ Real statistics from one of our sites (obtained via Fusion Reactor). Note how ma
 302 Found: 48 
 404 Not Found: 58 
 
+
 More
 ----
 - You are likely to also see benefits from enabling gzip compression on your webserver. Compressing something twice is generally pointless (ever tried zipping a JPEG?). However, combine.cfc strips out white space, comments, etc, Gzip is lossless; therefore the combination of the 2 can be quite effective.
-- YSlow is a great Firefox extension which can help you determine what optimisations you can make to imporve your site's performance (requires Firebug)
+- YSlow is a great Firefox extension which can help you determine what optimisations you can make to improve your site's performance (requires Firebug)
 - Yahoo's best practices document (linked to from YSlow) is worth a read if you are serious about optimisation: http://developer.yahoo.com/performance/rules.html
 - Firebug - It's pains me to think of the days I spent as a web developer without this Firefox extension!
 - The following post contains useful information about the Java class path: http://weblogs.macromedia.com/cantrell/archives/2004/07/the_definitive.html
+- Understanding HTTP caching can really help you optimise delivery, and reduce server load. Checkout http://symkat.com/45/understanding-http-caching/ & http://palisade.plynt.com/issues/2008Jul/cache-control-attributes/ & experiment with something like Charles Proxy or HTTPFox to debug the effects of different caching configurations. 
 
 
 Contact
